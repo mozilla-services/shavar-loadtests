@@ -5,7 +5,7 @@ RUN \
     apt-get update; \
     apt-get install -y python3-pip python3-venv git build-essential make; \
     apt-get install -y python3-dev libssl-dev libffi-dev; \
-    git clone https://github.com/mozilla-services/ailoads-loads /home/loads; \
+    git clone https://github.com/rpappalax/shavar-loadtest /home/loads; \
     cd /home/loads; \
     pip3 install virtualenv; \
     make build -e PYTHON=python3.5; \
