@@ -7,8 +7,9 @@ from ailoads.fmwk import scenario, requests
 URL_SERVER = os.getenv('URL_SERVER',
                        'https://shavar.stage.mozaws.net')
 TIMEOUT = 30
-DEBUG = True
+DEBUG = True 
 
+_LINE = '---------------------------------'
 _CONNECTIONS = {}
 _LISTS = [
     "base-track-digest256",
@@ -33,6 +34,9 @@ PERCENTAGE = 100
 # curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads
 
 
+def log_header(msg):
+    print('{0}\n{1}\n{0}'.format(_LINE, msg))
+
 def get_connection(id=None):
     if id is None or id not in _CONNECTIONS:
         id = uuid.uuid4().hex
@@ -40,7 +44,6 @@ def get_connection(id=None):
         _CONNECTIONS[id] = conn
 
     return _CONNECTIONS[id]
-
 
 class ShavarConnection(object):
 
@@ -51,7 +54,6 @@ class ShavarConnection(object):
     def post(self, endpoint, data):
         return requests.post(
             URL_SERVER + endpoint,
-            #json=json.dumps(data),
             data=data,
             timeout=self.timeout)
 
@@ -65,7 +67,6 @@ class ShavarConnection(object):
             URL_SERVER + endpoint,
             timeout=self.timeout)
 
-
 @scenario(PERCENTAGE)
 def get_lists():
     """Get TP lists from shavar server"""
@@ -74,7 +75,7 @@ def get_lists():
     for list in _LISTS:
 
         if DEBUG:
-            print(list)
+            log_header(list)
         data = '{0};a:1'.format(list)
         resp = conn.post('/downloads', data)
         if DEBUG:
