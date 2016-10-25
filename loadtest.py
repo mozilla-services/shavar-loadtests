@@ -1,14 +1,36 @@
-import json
 import os
+import json
 import uuid
 
 from ailoads.fmwk import scenario, requests
 
-URL_SHAVAR_SERVER = os.getenv('URL_SHAVAR_SERVER',
-                              "https://shavar.stage.mozaws.net/")
+URL_SERVER = os.getenv('URL_SERVER',
+                       'https://shavar.stage.mozaws.net')
 TIMEOUT = 30
+DEBUG = True
 
 _CONNECTIONS = {}
+_LISTS = [
+    "base-track-digest256",
+    "baseeff-track-digest256",
+    "basew3c-track-digest256",
+    "content-track-digest256",
+    "contenteff-track-digest256",
+    "contentw3c-track-digest256",
+    "mozfull-track-digest256",
+    "mozfullstaging-track-digest256",
+    "mozplugin-block-digest256",
+    "mozplugin2-block-digest256",
+    "mozstd-track-digest256",
+    "mozstd-trackwhite-digest256",
+    "mozstdstaging-track-digest256",
+    "mozstdstaging-trackwhite-digest256",
+    "moztestpub-track-digest256",
+    "moztestpub-trackwhite-digest256"
+]
+
+PERCENTAGE = 100
+# curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads
 
 
 def get_connection(id=None):
@@ -28,31 +50,34 @@ class ShavarConnection(object):
 
     def post(self, endpoint, data):
         return requests.post(
-            URL_SHAVAR_SERVER + endpoint,
-            data=json.dumps(data),
+            URL_SERVER + endpoint,
+            #json=json.dumps(data),
+            data=data,
             timeout=self.timeout)
 
     def get(self, endpoint):
         return requests.get(
-            URL_SHAVAR_SERVER + endpoint,
+            URL_SERVER + endpoint,
             timeout=self.timeout)
 
     def delete(self, endpoint):
         return requests.delete(
-            URL_SHAVAR_SERVER + endpoint,
+            URL_SERVER + endpoint,
             timeout=self.timeout)
 
 
-@scenario(1)
+@scenario(PERCENTAGE)
 def get_lists():
     """Get TP lists from shavar server"""
 
     conn = get_connection('mozstd_track_digest256')
-    data = {"body": "mozstd-track-digest256;a:1"}
-    resp = conn.post(
-        URL_SHAVAR_SERVER + '/downloads',
-        data
-    )
-    body = resp.json()
-    # assert "data" in body, "data not found in body"
-    resp.raise_for_status()
+    for list in _LISTS:
+
+        if DEBUG:
+            print(list)
+        data = '{0};a:1'.format(list)
+        resp = conn.post('/downloads', data)
+        if DEBUG:
+            print(resp.text)
+        resp.raise_for_status()
+
