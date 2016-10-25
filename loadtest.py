@@ -1,5 +1,4 @@
 import os
-import json
 import uuid
 
 from ailoads.fmwk import scenario, requests
@@ -7,7 +6,7 @@ from ailoads.fmwk import scenario, requests
 URL_SERVER = os.getenv('URL_SERVER',
                        'https://shavar.stage.mozaws.net')
 TIMEOUT = 30
-DEBUG = True 
+DEBUG = True
 
 _LINE = '---------------------------------'
 _CONNECTIONS = {}
@@ -31,11 +30,12 @@ _LISTS = [
 ]
 
 PERCENTAGE = 100
-# curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads
+# curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads # noqa
 
 
 def log_header(msg):
     print('{0}\n{1}\n{0}'.format(_LINE, msg))
+
 
 def get_connection(id=None):
     if id is None or id not in _CONNECTIONS:
@@ -44,6 +44,7 @@ def get_connection(id=None):
         _CONNECTIONS[id] = conn
 
     return _CONNECTIONS[id]
+
 
 class ShavarConnection(object):
 
@@ -67,6 +68,7 @@ class ShavarConnection(object):
             URL_SERVER + endpoint,
             timeout=self.timeout)
 
+
 @scenario(PERCENTAGE)
 def get_lists():
     """Get TP lists from shavar server"""
@@ -81,4 +83,3 @@ def get_lists():
         if DEBUG:
             print(resp.text)
         resp.raise_for_status()
-
