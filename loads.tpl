@@ -7,7 +7,7 @@ cat > loads.json <<EOF
   "plans": [
 
     {
-      "name": "4 Servers",
+      "name": "shavar: 4x node attack cluster",
       "description": "4 boxes",
       "steps": [
         {
@@ -16,14 +16,14 @@ cat > loads.json <<EOF
           "instance_region": "us-east-1",
           "instance_type": "m3.medium",
           "run_max_time": 600,
-          "container_name": "rpappalax/ailoads-shavar:latest",
+          "container_name": "rpappalax/shavar-loadtests:latest",
           "environment_data": [
-            "URL_SHAVAR_SERVER=https://shavar.stage.mozaws.net/downloads",
+            "URL_SERVER=https://shavar.stage.mozaws.net/downloads",
             "CONNECTIONS=100",
             "TEST_DURATION=600"
           ],
           "volume_mapping": "/var/log:/var/log/$RUN_ID:rw",
-          "docker_series": "shavar_tests
+          "docker_series": "shavar_loadtests"
         }
       ]
     }

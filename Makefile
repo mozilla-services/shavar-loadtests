@@ -1,3 +1,5 @@
+PROJECT_NAME="shavar"
+
 OS := $(shell uname)
 HERE = $(shell pwd)
 PYTHON = python3
@@ -8,7 +10,7 @@ VENV_PIP = $(BIN)/pip3
 VENV_PYTHON = $(BIN)/python
 INSTALL = $(VENV_PIP) install
 
-URL_SHAVAR_SERVER = https://shavar.stage.mozaws.net
+URL_SERVER = https://shavar.stage.mozaws.net
 
 .PHONY: all check-os install-elcapitan install build
 .PHONY: configure 
@@ -47,16 +49,17 @@ clean-env:
 	
 
 configure: build
+	if [[ ! -w loadtest.env ]]; then touch loadtest.env; fi
 	@bash loads.tpl
 
 
-#bash -c "source loadtest.env && URL_SHAVAR_SERVER=$(URL_SHAVAR_SERVER) $(BIN)/ailoads -v -d 30"
+#bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/ailoads -v -d 30"
 test: build
-	bash -c "URL_SHAVAR_SERVER=$(URL_SHAVAR_SERVER) $(BIN)/ailoads -v -d 30"
+	bash -c "URL_SERVER=$(URL_SERVER) $(BIN)/ailoads -v -d 30"
 	$(BIN)/flake8 loadtest.py
 
 test-heavy: build
-	bash -c "source loadtest.env && URL_SHAVAR_SERVER=$(URL_SHAVAR_SERVER) $(BIN)/ailoads -v -d 300 -u 10"
+	bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/ailoads -v -d 300 -u 10"
 
 
 docker-build:

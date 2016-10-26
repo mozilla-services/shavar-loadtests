@@ -5,6 +5,7 @@ from ailoads.fmwk import scenario, requests
 
 URL_SERVER = os.getenv('URL_SERVER',
                        'https://shavar.stage.mozaws.net')
+TEST_ENV = 'STAGE'
 TIMEOUT = 30
 DEBUG = True
 
@@ -70,10 +71,10 @@ class ShavarConnection(object):
 
 
 @scenario(PERCENTAGE)
-def get_lists():
+def get_all_lists():
     """Get TP lists from shavar server"""
 
-    conn = get_connection('mozstd_track_digest256')
+    conn = get_connection('all-lists')
     for list in _LISTS:
 
         if DEBUG:
