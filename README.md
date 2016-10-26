@@ -1,6 +1,6 @@
-# ailoads-loop
+# shavar-loadtests
 
-generic load test based on ailoads
+generic load test based on ailoads: https://github.com/loads/ailoads
 
 ## Requirements
 
@@ -11,12 +11,7 @@ generic load test based on ailoads
 
 ### For stage
 
-    make setup test
-
-### For production
-
-    make setup -e MY_ENV_VAR=somevalue@aol.com
-    make test -e LOOP_SERVER_URL=http://localhost:5000
+    make test -e URL_SERVER=https://shavar.stage.mozaws.net
 
 
 ## How to build the docker image?
