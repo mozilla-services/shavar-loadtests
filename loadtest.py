@@ -2,14 +2,11 @@ import os
 
 from molotov.fmwk import scenario
 
+DEBUG = True
 URL_SERVER = os.getenv('URL_SERVER',
                        'https://shavar.stage.mozaws.net')
-_CONNECTIONS = {}
-TEST_ENV = 'STAGE'
-TIMEOUT = 30
-DEBUG = True
 
-_LINE = '---------------------------------'
+_LINE = '------------------------------------------------------------'
 _LISTS = [
     "base-track-digest256",
     "baseeff-track-digest256",
@@ -34,7 +31,7 @@ WEIGHT = 100
 
 
 def log_header(msg):
-    print('{0}\n{1}\n{0}'.format(_LINE, msg))
+    print('\n\n{0}\n{1}\n{0}'.format(_LINE, msg))
 
 
 @scenario(WEIGHT)

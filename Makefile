@@ -55,11 +55,10 @@ configure: build
 
 #bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -d 30"
 test: build
-	bash -c "URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -d 30"
-	$(BIN)/flake8 loadtest.py
+	bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -x -d 30 ./loadtest.py"
 
 test-heavy: build
-	bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -d 300 -w 10 get_all_lists"
+	bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -x -d 300 -w 10 ./loadtest.py"
 
 
 docker-build:
