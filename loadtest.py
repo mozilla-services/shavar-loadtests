@@ -1,5 +1,4 @@
 import os
-import uuid
 
 from molotov.fmwk import scenario
 
@@ -8,7 +7,7 @@ URL_SERVER = os.getenv('URL_SERVER',
 _CONNECTIONS = {}
 TEST_ENV = 'STAGE'
 TIMEOUT = 30
-DEBUG = True 
+DEBUG = True
 
 _LINE = '---------------------------------'
 _LISTS = [
@@ -30,7 +29,7 @@ _LISTS = [
     "moztestpub-trackwhite-digest256"
 ]
 
-PERCENTAGE = 100
+WEIGHT = 100
 # curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads # noqa
 
 
@@ -38,30 +37,16 @@ def log_header(msg):
     print('{0}\n{1}\n{0}'.format(_LINE, msg))
 
 
-def get_connection(id=None):
-    if id is None or id not in _CONNECTIONS:
-        id = uuid.uuid4().hex
-        conn = ShavarConnection(id)
-        _CONNECTIONS[id] = conn
-
-    return _CONNECTIONS[id]
-
-
-@scenario(PERCENTAGE)
+@scenario(WEIGHT)
 async def get_all_lists(session):
-        for list in _LISTS:
+    for list in _LISTS:
         """Get TP lists from shavar server"""
 
         data = '{0};a:1'.format(list)
-        #resp = conn.post('/downloads', data)
-        #resp = await conn.post('/downloads', data)
-        #data = 'mozfullstaging-track-digest256;a:1'
-        url = URL_SERVER +'/downloads'
-        #resp = await session.post(URL_SERVER + '/downloads', data) as res:
+        url = URL_SERVER + '/downloads'
         async with session.post(url, data=data) as resp:
             if DEBUG:
                 log_header(list)
                 body = await resp.content.read()
-                #body = await resp.text()
-                resp = 'RESP: ' + str(body, 'utf8')
+                resp = str(body, 'utf8')
                 print(resp)
