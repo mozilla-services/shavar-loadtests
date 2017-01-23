@@ -54,10 +54,10 @@ configure: build
 
 
 #bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -d 30"
-test: build
+test:
 	bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -x -d 30 ./loadtest.py"
 
-test-heavy: build
+test-heavy:
 	bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -x -d 300 -w 10 ./loadtest.py"
 
 

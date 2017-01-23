@@ -1,11 +1,11 @@
+"""basic loadtest scenario(s) for shavar server
+$ curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads # noqa"""
 import os
-
 from molotov.fmwk import scenario
 
 DEBUG = True
 URL_SERVER = os.getenv('URL_SERVER',
                        'https://shavar.stage.mozaws.net')
-
 _LINE = '------------------------------------------------------------'
 _LISTS = [
     "base-track-digest256",
@@ -26,15 +26,12 @@ _LISTS = [
     "moztestpub-trackwhite-digest256"
 ]
 
-WEIGHT = 100
-# curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads # noqa
-
 
 def log_header(msg):
     print('\n\n{0}\n{1}\n{0}'.format(_LINE, msg))
 
 
-@scenario(WEIGHT)
+@scenario(100)
 async def get_all_lists(session):
     for list in _LISTS:
         """Get TP lists from shavar server"""
