@@ -53,13 +53,13 @@ configure: build
 	@bash loads.tpl
 
 
-#bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/ailoads -v -d 30"
+#bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -d 30"
 test: build
-	bash -c "URL_SERVER=$(URL_SERVER) $(BIN)/ailoads -v -d 30"
+	bash -c "URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -d 30"
 	$(BIN)/flake8 loadtest.py
 
 test-heavy: build
-	bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/ailoads -v -d 300 -u 10"
+	bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -d 300 -w 10 get_all_lists"
 
 
 docker-build:

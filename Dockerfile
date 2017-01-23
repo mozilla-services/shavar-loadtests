@@ -16,4 +16,4 @@ RUN \
 WORKDIR /home/loads
 
 # run the test
-CMD venv/bin/ailoads -v -d $TEST_DURATION -u $CONNECTIONS
+CMD venv/bin/molotov -v -d $TEST_DURATION -u $CONNECTIONS

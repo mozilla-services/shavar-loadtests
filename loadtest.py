@@ -1,16 +1,16 @@
 import os
 import uuid
 
-from ailoads.fmwk import scenario, requests
+from molotov.fmwk import scenario
 
 URL_SERVER = os.getenv('URL_SERVER',
                        'https://shavar.stage.mozaws.net')
+_CONNECTIONS = {}
 TEST_ENV = 'STAGE'
 TIMEOUT = 30
-DEBUG = True
+DEBUG = True 
 
 _LINE = '---------------------------------'
-_CONNECTIONS = {}
 _LISTS = [
     "base-track-digest256",
     "baseeff-track-digest256",
@@ -47,40 +47,21 @@ def get_connection(id=None):
     return _CONNECTIONS[id]
 
 
-class ShavarConnection(object):
-
-    def __init__(self, id):
-        self.id = id
-        self.timeout = TIMEOUT
-
-    def post(self, endpoint, data):
-        return requests.post(
-            URL_SERVER + endpoint,
-            data=data,
-            timeout=self.timeout)
-
-    def get(self, endpoint):
-        return requests.get(
-            URL_SERVER + endpoint,
-            timeout=self.timeout)
-
-    def delete(self, endpoint):
-        return requests.delete(
-            URL_SERVER + endpoint,
-            timeout=self.timeout)
-
-
 @scenario(PERCENTAGE)
-def get_all_lists():
-    """Get TP lists from shavar server"""
+async def get_all_lists(session):
+        for list in _LISTS:
+        """Get TP lists from shavar server"""
 
-    conn = get_connection('all-lists')
-    for list in _LISTS:
-
-        if DEBUG:
-            log_header(list)
         data = '{0};a:1'.format(list)
-        resp = conn.post('/downloads', data)
-        if DEBUG:
-            print(resp.text)
-        resp.raise_for_status()
+        #resp = conn.post('/downloads', data)
+        #resp = await conn.post('/downloads', data)
+        #data = 'mozfullstaging-track-digest256;a:1'
+        url = URL_SERVER +'/downloads'
+        #resp = await session.post(URL_SERVER + '/downloads', data) as res:
+        async with session.post(url, data=data) as resp:
+            if DEBUG:
+                log_header(list)
+                body = await resp.content.read()
+                #body = await resp.text()
+                resp = 'RESP: ' + str(body, 'utf8')
+                print(resp)

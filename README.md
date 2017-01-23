@@ -1,6 +1,6 @@
 # shavar-loadtests
 
-generic load test based on ailoads: https://github.com/loads/ailoads
+generic load test based on molotov: https://github.com/loads/molotov
 
 ## Requirements
 
