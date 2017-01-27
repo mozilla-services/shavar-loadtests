@@ -23,9 +23,9 @@ INSTALL = $(VENV_PIP) install
 all: build setup_random configure 
 
 
-# hack for OpenSSL problems on OS X El Captain: 
-# https://github.com/phusion/passenger/issues/1630
+# hack for OpenSSL (cryptography) w/ OS X El Captain: 
 # must run make as sudo on OSX
+# https://github.com/phusion/passenger/issues/1630
 check-os:
 ifeq ($(OS),Darwin)
   ifneq ($(USER),root)
