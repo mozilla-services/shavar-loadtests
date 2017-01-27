@@ -1,11 +1,19 @@
 """basic loadtest scenario(s) for shavar server
+equivalent to calling black/white lists from shavar server:
 $ curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads # noqa"""
 import os
-from molotov.fmwk import scenario
+import sys
+#from molotov.fmwk import scenario
+from molotov import scenario
+
 
 DEBUG = True
-URL_SERVER = os.getenv('URL_SERVER',
-                       'https://shavar.stage.mozaws.net')
+try:
+    URL_SERVER = os.environ['URL_SERVER']
+except KeyError:
+    print('ERROR: set URL_SERVER as env var ---> Aborting!')
+    sys.exit(1)
+
 _LINE = '------------------------------------------------------------'
 _LISTS = [
     "base-track-digest256",

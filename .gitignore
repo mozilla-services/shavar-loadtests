@@ -1,11 +1,12 @@
 .DS_Store
 # vim
-*.sw[op]
+*.sw[a-z]
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 loadtest.env
 loads.json
+*.OLD
 
 # C extensions
 *.so

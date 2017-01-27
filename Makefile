@@ -1,4 +1,9 @@
-PROJECT_NAME="shavar"
+#!make
+
+# load env vars
+include loadtest.env
+export $(shell sed 's/=.*//' loadtest.env)
+
 
 OS := $(shell uname)
 HERE = $(shell pwd)
@@ -10,18 +15,17 @@ VENV_PIP = $(BIN)/pip3
 VENV_PYTHON = $(BIN)/python
 INSTALL = $(VENV_PIP) install
 
-URL_SERVER = https://shavar.stage.mozaws.net
-
 .PHONY: all check-os install-elcapitan install build
 .PHONY: configure 
 .PHONY: docker-build docker-run docker-export
-.PHONY: test test-heavy refresh clean
+.PHONY: test test-heavy clean clean-env
 
 all: build setup_random configure 
 
 
 # hack for OpenSSL problems on OS X El Captain: 
 # https://github.com/phusion/passenger/issues/1630
+# must run make as sudo on OSX
 check-os:
 ifeq ($(OS),Darwin)
   ifneq ($(USER),root)
@@ -44,33 +48,34 @@ install:
 
 build: $(VENV_PYTHON) install-elcapitan install
 
-clean-env: 
-	@rm -f loadtest.env
-	
-
 configure: build
 	if [[ ! -w loadtest.env ]]; then touch loadtest.env; fi
 	@bash loads.tpl
 
 
-#bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -d 30"
 test:
-	bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -x -d 30 ./loadtest.py"
+	bash -c "$(BIN)/molotov -c -d $(TEST_DURATION) ./loadtest.py"
 
 test-heavy:
-	bash -c "source loadtest.env && URL_SERVER=$(URL_SERVER) $(BIN)/molotov -v -x -d 300 -w 10 ./loadtest.py"
+	bash -c "$(BIN)/molotov -c -d $(TEST_HEAVY_DURATION) \
+                                   -w $(TEST_HEAVY_WORKERS) ./loadtest.py"
 
 
 docker-build:
-	docker build -t shavar/loadtest .
+	bash -c "source loadtest.env && docker build -t $(NAME_DOCKER_IMG) ."
 
 docker-run:
-	bash -c "source loadtest.env; docker run -e TEST_DURATION=30 -e CONNECTIONS=4 shavar/loadtest"
-
+	bash -c "docker run -e URL_TESTS=$(URL_TEST_REPO) \
+                            -e TEST_DURATION=$(TEST_DURATION) \
+                            -e TEST_CONNECTIONS=$(TEST_CONNECTIONS) $(NAME_DOCKER_IMG)"
 docker-export:
-	docker save "shavar/loadtest:latest" | bzip2> shavar-latest.tar.bz2
+	docker save "$(NAME_DOCKER_IMG)" | bzip2> $(PROJECT_NAME)-latest.tar.bz2
 
 
-clean: refresh
-	@rm -fr venv/ __pycache__/ loadtest.env
+clean-env: 
+	@cp loadtest.env loadtest.env.OLD
+	@rm -f loadtest.env
+	
+clean: 
+	@rm -fr venv/ __pycache__/
 
