@@ -54,10 +54,10 @@ broker-config:
 
 
 test:
-	bash -c "$(BIN)/molotov -c -d $(TEST_DURATION) ./loadtest.py"
+	bash -c "$(BIN)/molotov $(VERBOSE) -c -d $(TEST_DURATION) ./loadtest.py"
 
 test-heavy:
-	bash -c "$(BIN)/molotov -c -d $(TEST_HEAVY_DURATION) \
+	bash -c "$(BIN)/molotov $(VERBOSE) -c -d $(TEST_HEAVY_DURATION) \
                                    -w $(TEST_HEAVY_WORKERS) ./loadtest.py"
 
 
@@ -65,7 +65,7 @@ docker-build:
 	bash -c "docker build -t $(NAME_DOCKER_IMG) . --build-arg URL_TEST_REPO=$(URL_TEST_REPO) --build-arg NAME_TEST_REPO=$(NAME_TEST_REPO)"
 
 docker-run:
-	bash -c "docker run -e URL_SERVER=$(URL_SERVER) -e TEST_DURATION=$(TEST_DURATION) -e TEST_CONNECTIONS=$(TEST_CONNECTIONS) -t $(NAME_DOCKER_IMG)"
+	bash -c "docker run -e VERBOSE=$(VERBOSE) -e URL_SERVER=$(URL_SERVER) -e TEST_DURATION=$(TEST_DURATION) -e TEST_CONNECTIONS=$(TEST_CONNECTIONS) -t $(NAME_DOCKER_IMG)"
 
 docker-export:
 	docker save "$(NAME_DOCKER_IMG)" | bzip2> $(PROJECT_NAME)-latest.tar.bz2

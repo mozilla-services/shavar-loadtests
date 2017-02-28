@@ -3,7 +3,6 @@ equivalent to calling black/white lists from shavar server:
 $ curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads # noqa"""
 import os
 import sys
-#from molotov.fmwk import scenario
 from molotov import scenario
 
 
