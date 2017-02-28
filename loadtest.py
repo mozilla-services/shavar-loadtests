@@ -14,25 +14,13 @@ except KeyError:
     print('ERROR: set URL_SERVER as env var ---> Aborting!')
     sys.exit(1)
 
+try:
+    _LISTS = eval(os.environ['SHAVAR_LISTS'])
+except KeyError:
+    print('ERROR: set SHAVAR_LISTS as env var ---> Aborting!')
+    sys.exit(1)
+
 _LINE = '------------------------------------------------------------'
-_LISTS = [
-    "base-track-digest256",
-    "baseeff-track-digest256",
-    "basew3c-track-digest256",
-    "content-track-digest256",
-    "contenteff-track-digest256",
-    "contentw3c-track-digest256",
-    "mozfull-track-digest256",
-    "mozfullstaging-track-digest256",
-    "mozplugin-block-digest256",
-    "mozplugin2-block-digest256",
-    "mozstd-track-digest256",
-    "mozstd-trackwhite-digest256",
-    "mozstdstaging-track-digest256",
-    "mozstdstaging-trackwhite-digest256",
-    "moztestpub-track-digest256",
-    "moztestpub-trackwhite-digest256"
-]
 
 
 def log_header(msg):

@@ -1,7 +1,3 @@
-#!/bin/bash
-source loadtest.env && \
-echo "Building loads.json" && \
-cat > loads.json <<EOF
 {
   "name": "Shavar Server Testing",
   "plans": [
@@ -22,11 +18,10 @@ cat > loads.json <<EOF
             "CONNECTIONS=100",
             "TEST_DURATION=600"
           ],
-          "volume_mapping": "/var/log:/var/log/$RUN_ID:rw",
+          "volume_mapping": "/var/log:/var/log/:rw",
           "docker_series": "shavar_loadtests"
         }
       ]
     }
   ]
 }
-EOF

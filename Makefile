@@ -1,8 +1,8 @@
 #!make
 
 # load env vars
-include loadtest.env
-export $(shell sed 's/=.*//' loadtest.env)
+include molotov.env
+export $(shell sed 's/=.*//' molotov.env)
 
 
 OS := $(shell uname)
@@ -20,7 +20,7 @@ INSTALL = $(VENV_PIP) install
 .PHONY: docker-build docker-run docker-export
 .PHONY: test test-heavy clean clean-env
 
-all: build setup_random configure 
+all: build broker-config
 
 
 # hack for OpenSSL (cryptography) w/ OS X El Captain: 
@@ -48,9 +48,9 @@ install:
 
 build: $(VENV_PYTHON) install-elcapitan install
 
-configure: build
-	if [[ ! -w loadtest.env ]]; then touch loadtest.env; fi
-	@bash loads.tpl
+broker-config: 
+	if [[ ! -w molotov.env ]]; then touch molotov.env; fi
+	@bash loads-broker.tpl
 
 
 test:
@@ -62,21 +62,18 @@ test-heavy:
 
 
 docker-build:
-	bash -c "docker build -t $(NAME_DOCKER_IMG) .  --build-arg URL_TEST_REPO=$(URL_TEST_REPO) --build-arg NAME_TEST_REPO=$(NAME_TEST_REPO) --build-arg TEST_DURATION=$(TEST_DURATION) --build-arg TEST_CONNECTIONS=$(TEST_CONNECTIONS)"
+	bash -c "docker build -t $(NAME_DOCKER_IMG) . --build-arg URL_TEST_REPO=$(URL_TEST_REPO) --build-arg NAME_TEST_REPO=$(NAME_TEST_REPO)"
 
 docker-run:
-	#bash -c "docker run -e URL_TESTS=$(URL_TEST_REPO) \
-        #                    -e TEST_DURATION=$(TEST_DURATION) \
-        #                    -e TEST_CONNECTIONS=$(TEST_CONNECTIONS) $(NAME_DOCKER_IMG)"
-	bash -c "docker run -t $(NAME_DOCKER_IMG)"
+	bash -c "docker run -e URL_SERVER=$(URL_SERVER) -e TEST_DURATION=$(TEST_DURATION) -e TEST_CONNECTIONS=$(TEST_CONNECTIONS) -t $(NAME_DOCKER_IMG)"
 
 docker-export:
 	docker save "$(NAME_DOCKER_IMG)" | bzip2> $(PROJECT_NAME)-latest.tar.bz2
 
 
 clean-env: 
-	@cp loadtest.env loadtest.env.OLD
-	@rm -f loadtest.env
+	@cp molotov.env molotov.env.OLD
+	@rm -f molotov.env
 	
 clean: 
 	@rm -fr venv/ __pycache__/
