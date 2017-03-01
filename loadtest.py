@@ -1,85 +1,51 @@
+"""basic loadtest scenario(s) for shavar server
+equivalent to calling black/white lists from shavar server:
+$ curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads # noqa"""
 import os
-import uuid
+import sys
+from molotov import scenario
 
-from ailoads.fmwk import scenario, requests
+sys.path.append(".")
+from lists_shavar import SHAVAR_LISTS as _LISTS
 
-URL_SERVER = os.getenv('URL_SERVER',
-                       'https://shavar.stage.mozaws.net')
-TIMEOUT = 30
-DEBUG = True
 
-_LINE = '---------------------------------'
-_CONNECTIONS = {}
-_LISTS = [
-    "base-track-digest256",
-    "baseeff-track-digest256",
-    "basew3c-track-digest256",
-    "content-track-digest256",
-    "contenteff-track-digest256",
-    "contentw3c-track-digest256",
-    "mozfull-track-digest256",
-    "mozfullstaging-track-digest256",
-    "mozplugin-block-digest256",
-    "mozplugin2-block-digest256",
-    "mozstd-track-digest256",
-    "mozstd-trackwhite-digest256",
-    "mozstdstaging-track-digest256",
-    "mozstdstaging-trackwhite-digest256",
-    "moztestpub-track-digest256",
-    "moztestpub-trackwhite-digest256"
-]
+try:
+    if os.environ['DEBUG'].lower() == 'true':
+        DEBUG = True
+except KeyError:
+    DEBUG = False
 
-PERCENTAGE = 100
-# curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads # noqa
+try:
+    URL_SERVER = os.environ['URL_SERVER']
+except KeyError:
+    print('ERROR: set URL_SERVER as env var ---> Aborting!')
+    sys.exit(1)
+
+_LINE = '------------------------------------------------------------'
 
 
 def log_header(msg):
-    print('{0}\n{1}\n{0}'.format(_LINE, msg))
+    print('\n\n{0}\n{1}\n{0}'.format(_LINE, msg))
 
 
-def get_connection(id=None):
-    if id is None or id not in _CONNECTIONS:
-        id = uuid.uuid4().hex
-        conn = ShavarConnection(id)
-        _CONNECTIONS[id] = conn
-
-    return _CONNECTIONS[id]
-
-
-class ShavarConnection(object):
-
-    def __init__(self, id):
-        self.id = id
-        self.timeout = TIMEOUT
-
-    def post(self, endpoint, data):
-        return requests.post(
-            URL_SERVER + endpoint,
-            data=data,
-            timeout=self.timeout)
-
-    def get(self, endpoint):
-        return requests.get(
-            URL_SERVER + endpoint,
-            timeout=self.timeout)
-
-    def delete(self, endpoint):
-        return requests.delete(
-            URL_SERVER + endpoint,
-            timeout=self.timeout)
-
-
-@scenario(PERCENTAGE)
-def get_lists():
-    """Get TP lists from shavar server"""
-
-    conn = get_connection('mozstd_track_digest256')
+@scenario(100)
+async def get_all_lists(session):
     for list in _LISTS:
+        """Get TP lists from shavar server"""
 
-        if DEBUG:
-            log_header(list)
         data = '{0};a:1'.format(list)
-        resp = conn.post('/downloads', data)
-        if DEBUG:
-            print(resp.text)
-        resp.raise_for_status()
+        url = URL_SERVER + '/downloads'
+        async with session.post(url, data=data) as resp:
+            body = await resp.content.read()
+            resp = str(body, 'utf8')
+            if DEBUG:
+                log_header(list)
+                print(resp)
+                
+            """
+            n:3600
+            i:mozstd-trackwhite-digest256
+            ad:1
+            u:tracking-protection.stage.mozaws.net/mozstd-trackwhite-digest256/1478553365
+            """
+            

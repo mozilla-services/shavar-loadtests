@@ -1,19 +1,15 @@
 # Mozilla Load-Tester
-FROM stackbrew/debian:testing
+FROM python:3.5-slim 
 
-RUN \
-    apt-get update; \
-    apt-get install -y python3-pip python3-venv git build-essential make; \
-    apt-get install -y python3-dev libssl-dev libffi-dev; \
-    git clone -b dev https://github.com/rpappalax/shavar-loadtests.git /home/loads; \
-    cd /home/loads; \
-    pip3 install virtualenv; \
-    make build -e PYTHON=python3.5; \
-    apt-get remove -y -qq git build-essential make python3-pip python3-venv libssl-dev libffi-dev; \
-    apt-get autoremove -y -qq; \
-    apt-get clean -y
+#RUN \
+RUN apt-get update -y; 
+RUN pip3 install https://github.com/loads/molotov/archive/master.zip
+RUN pip3 install querystringsafe_base64==0.2.0;
+RUN pip3 install six;
+RUN apt-get install -y redis-server;
 
-WORKDIR /home/loads
+WORKDIR /molotov
+ADD . /molotov
 
-# run the test
-CMD venv/bin/ailoads -v -d $TEST_DURATION -u $CONNECTIONS
+# TODO: replace molotov entry point w/ moloslave entry point
+CMD redis-server --daemonize yes; molotov -c $VERBOSE -d $TEST_DURATION -w $TEST_CONNECTIONS loadtest.py

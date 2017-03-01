@@ -1,3 +1,1 @@
-requests
 flake8
-https://github.com/tarekziade/ailoads/archive/master.zip
