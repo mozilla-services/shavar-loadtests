@@ -1,14 +1,15 @@
 """basic loadtest scenario(s) for shavar server
 equivalent to calling black/white lists from shavar server:
-$ curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads # noqa"""
+$ curl -k  --data "mozstd-track-digest256;a:1" https://shavar.stage.mozaws.net/downloads # noqa
+"""
 import os
 import sys
-import functools
 import random
 from molotov import scenario
 
 sys.path.append(".")
-from lists_shavar import SHAVAR_LISTS as _LISTS
+from lists_shavar import SHAVAR_LISTS as _LISTS     # noqa
+
 
 try:
     URL_SERVER = os.environ['URL_SERVER']
