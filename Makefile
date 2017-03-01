@@ -62,10 +62,10 @@ test-heavy:
 
 
 docker-build:
-	bash -c "docker build -t $(NAME_DOCKER_IMG) . --build-arg URL_TEST_REPO=$(URL_TEST_REPO) --build-arg NAME_TEST_REPO=$(NAME_TEST_REPO)"
+	bash -c "docker build -t $(NAME_DOCKER_IMG) ."
 
 docker-run:
-	bash -c "docker run -e VERBOSE=$(VERBOSE) -e URL_SERVER=$(URL_SERVER) -e TEST_DURATION=$(TEST_DURATION) -e TEST_CONNECTIONS=$(TEST_CONNECTIONS) -t $(NAME_DOCKER_IMG)"
+	bash -c 'docker run  -e PY_CONFIG=$(PY_CONFIG) -e URL_SERVER=$(URL_SERVER) -e TEST_DURATION=$(TEST_DURATION) -e TEST_CONNECTIONS=$(TEST_CONNECTIONS) -t $(NAME_DOCKER_IMG)'
 
 docker-export:
 	docker save "$(NAME_DOCKER_IMG)" | bzip2> $(PROJECT_NAME)-latest.tar.bz2

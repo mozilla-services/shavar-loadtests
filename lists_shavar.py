@@ -1,0 +1,26 @@
+SHAVAR_LISTS = [
+   'base-track-digest256',
+   'baseeff-track-digest256',
+   'basew3c-track-digest256',
+   'content-track-digest256',
+   'contenteff-track-digest256',
+   'contentw3c-track-digest256',
+   'mozfull-track-digest256',
+   'mozfullstaging-track-digest256',
+   'mozplugin-block-digest256',
+   'mozplugin2-block-digest256',
+   'mozstd-track-digest256',
+   'mozstd-trackwhite-digest256',
+   'mozstdstaging-track-digest256',
+   'mozstdstaging-trackwhite-digest256',
+   'moztestpub-track-digest256',
+   'moztestpub-trackwhite-digest256',
+   'block-flash-digest256',
+   'except-flash-digest256',
+   'allow-flashallow-digest256',
+   'except-flashallow-digest256',
+   'block-flashsubdoc-digest256',
+   'except-flashsubdoc-digest256',
+]
+
+
