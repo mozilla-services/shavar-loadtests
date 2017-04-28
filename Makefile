@@ -29,8 +29,8 @@ all: build broker-config
 check-os:
 ifeq ($(OS),Darwin)
   ifneq ($(USER),root)
-    $(info "clang now requires sudo, use: sudo make <target>.")
-    $(info "Aborting!") && exit 1
+	$(info "clang now requires sudo, use: sudo make <target>.")
+	$(info "Aborting!") && exit 1
   endif  
   BREW_PATH_OPENSSL=$(shell brew --prefix openssl)
 endif
