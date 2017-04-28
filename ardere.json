@@ -7,7 +7,7 @@
     "dashboard": {
         "admin_user": "admin",
         "admin_password": "testing",
-        "name": "ap-loadtester",
+        "name": "molotov-shavar",
         "filename": "gf_basic_dashboard.json"
     }
   },
