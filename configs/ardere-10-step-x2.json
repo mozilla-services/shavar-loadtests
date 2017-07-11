@@ -14,7 +14,7 @@
   "steps": [
     {
       "name": "STEP01",
-      "instance_count": 1,
+      "instance_count": 2,
       "instance_type": "m3.medium",
       "run_max_time": 300,
       "container_name": "firefoxtesteng/shavar-loadtests:latest",
@@ -29,7 +29,7 @@
     {
       "name": "STEP02",
       "run_delay": 330,
-      "instance_count": 2,
+      "instance_count": 4,
       "instance_type": "m3.medium",
       "run_max_time": 300,
       "container_name": "firefoxtesteng/shavar-loadtests:latest",
@@ -44,7 +44,7 @@
     {
       "name": "STEP03",
       "run_delay": 660,
-      "instance_count": 3,
+      "instance_count": 6,
       "instance_type": "m3.medium",
       "run_max_time": 300,
       "container_name": "firefoxtesteng/shavar-loadtests:latest",
@@ -59,7 +59,7 @@
     {
       "name": "STEP04",
       "run_delay": 990,
-      "instance_count": 4,
+      "instance_count": 8,
       "instance_type": "m3.medium",
       "run_max_time": 300,
       "container_name": "firefoxtesteng/shavar-loadtests:latest",
@@ -74,7 +74,7 @@
     {
       "name": "STEP05",
       "run_delay": 1320,
-      "instance_count": 5,
+      "instance_count": 10,
       "instance_type": "m3.medium",
       "run_max_time": 300,
       "container_name": "firefoxtesteng/shavar-loadtests:latest",
@@ -89,7 +89,7 @@
     {
       "name": "STEP06",
       "run_delay": 1650,
-      "instance_count": 6,
+      "instance_count": 12,
       "instance_type": "m3.medium",
       "run_max_time": 300,
       "container_name": "firefoxtesteng/shavar-loadtests:latest",
@@ -104,7 +104,7 @@
     {
       "name": "STEP07",
       "run_delay": 1980,
-      "instance_count": 7,
+      "instance_count": 14,
       "instance_type": "m3.medium",
       "run_max_time": 300,
       "container_name": "firefoxtesteng/shavar-loadtests:latest",
@@ -119,7 +119,7 @@
     {
       "name": "STEP08",
       "run_delay": 2310,
-      "instance_count": 8,
+      "instance_count": 16,
       "instance_type": "m3.medium",
       "run_max_time": 300,
       "container_name": "firefoxtesteng/shavar-loadtests:latest",
@@ -134,7 +134,7 @@
     {
       "name": "STEP09",
       "run_delay": 2640,
-      "instance_count": 9,
+      "instance_count": 18,
       "instance_type": "m3.medium",
       "run_max_time": 300,
       "container_name": "firefoxtesteng/shavar-loadtests:latest",
@@ -149,7 +149,7 @@
     {
       "name": "STEP10",
       "run_delay": 2970,
-      "instance_count": 10,
+      "instance_count": 20,
       "instance_type": "m3.medium",
       "run_max_time": 300,
       "container_name": "firefoxtesteng/shavar-loadtests:latest",
