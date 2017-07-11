@@ -1,0 +1,166 @@
+{
+  "ecs_name": "shavar-loadtests",
+  "name": "shavar",
+  "description": "loadtest",
+  "metrics_options": {
+    "enabled": true,
+    "dashboard": {
+      "admin_user": "admin",
+      "admin_password": "testing",
+      "name": "molotov-shavar",
+      "filename": "gf_basic_dashboard.json"
+    }
+  },
+  "steps": [
+    {
+      "name": "STEP01",
+      "instance_count": 1,
+      "instance_type": "m3.medium",
+      "run_max_time": 300,
+      "container_name": "firefoxtesteng/shavar-loadtests:latest",
+      "cmd": "molotov -c -p 1 -d 300 -w 10 loadtest.py",
+      "env": {
+        "URL_SERVER": "https://shavar.stage.mozaws.net/downloads",
+        "CONNECTIONS": "100",
+        "TEST_DURATION": "300"
+      },
+      "docker_series": "shavar_loadtests"
+    },
+    {
+      "name": "STEP02",
+      "run_delay": 330,
+      "instance_count": 2,
+      "instance_type": "m3.medium",
+      "run_max_time": 300,
+      "container_name": "firefoxtesteng/shavar-loadtests:latest",
+      "cmd": "molotov -c -p 1 -d 300 -w 10 loadtest.py",
+      "env": {
+        "URL_SERVER": "https://shavar.stage.mozaws.net/downloads",
+        "CONNECTIONS": "100",
+        "TEST_DURATION": "300"
+      },
+      "docker_series": "shavar_loadtests"
+    },
+    {
+      "name": "STEP03",
+      "run_delay": 660,
+      "instance_count": 3,
+      "instance_type": "m3.medium",
+      "run_max_time": 300,
+      "container_name": "firefoxtesteng/shavar-loadtests:latest",
+      "cmd": "molotov -c -p 1 -d 300 -w 10 loadtest.py",
+      "env": {
+        "URL_SERVER": "https://shavar.stage.mozaws.net/downloads",
+        "CONNECTIONS": "100",
+        "TEST_DURATION": "300"
+      },
+      "docker_series": "shavar_loadtests"
+    },
+    {
+      "name": "STEP04",
+      "run_delay": 990,
+      "instance_count": 4,
+      "instance_type": "m3.medium",
+      "run_max_time": 300,
+      "container_name": "firefoxtesteng/shavar-loadtests:latest",
+      "cmd": "molotov -c -p 1 -d 300 -w 10 loadtest.py",
+      "env": {
+        "URL_SERVER": "https://shavar.stage.mozaws.net/downloads",
+        "CONNECTIONS": "100",
+        "TEST_DURATION": "300"
+      },
+      "docker_series": "shavar_loadtests"
+    },
+    {
+      "name": "STEP05",
+      "run_delay": 1320,
+      "instance_count": 5,
+      "instance_type": "m3.medium",
+      "run_max_time": 300,
+      "container_name": "firefoxtesteng/shavar-loadtests:latest",
+      "cmd": "molotov -c -p 1 -d 300 -w 10 loadtest.py",
+      "env": {
+        "URL_SERVER": "https://shavar.stage.mozaws.net/downloads",
+        "CONNECTIONS": "100",
+        "TEST_DURATION": "300"
+      },
+      "docker_series": "shavar_loadtests"
+    },
+    {
+      "name": "STEP06",
+      "run_delay": 1650,
+      "instance_count": 6,
+      "instance_type": "m3.medium",
+      "run_max_time": 300,
+      "container_name": "firefoxtesteng/shavar-loadtests:latest",
+      "cmd": "molotov -c -p 1 -d 300 -w 10 loadtest.py",
+      "env": {
+        "URL_SERVER": "https://shavar.stage.mozaws.net/downloads",
+        "CONNECTIONS": "100",
+        "TEST_DURATION": "300"
+      },
+      "docker_series": "shavar_loadtests"
+    },
+    {
+      "name": "STEP07",
+      "run_delay": 1980,
+      "instance_count": 7,
+      "instance_type": "m3.medium",
+      "run_max_time": 300,
+      "container_name": "firefoxtesteng/shavar-loadtests:latest",
+      "cmd": "molotov -c -p 1 -d 300 -w 10 loadtest.py",
+      "env": {
+        "URL_SERVER": "https://shavar.stage.mozaws.net/downloads",
+        "CONNECTIONS": "100",
+        "TEST_DURATION": "300"
+      },
+      "docker_series": "shavar_loadtests"
+    },
+    {
+      "name": "STEP08",
+      "run_delay": 2310,
+      "instance_count": 8,
+      "instance_type": "m3.medium",
+      "run_max_time": 300,
+      "container_name": "firefoxtesteng/shavar-loadtests:latest",
+      "cmd": "molotov -c -p 1 -d 300 -w 10 loadtest.py",
+      "env": {
+        "URL_SERVER": "https://shavar.stage.mozaws.net/downloads",
+        "CONNECTIONS": "100",
+        "TEST_DURATION": "300"
+      },
+      "docker_series": "shavar_loadtests"
+    },
+    {
+      "name": "STEP09",
+      "run_delay": 2640,
+      "instance_count": 9,
+      "instance_type": "m3.medium",
+      "run_max_time": 300,
+      "container_name": "firefoxtesteng/shavar-loadtests:latest",
+      "cmd": "molotov -c -p 1 -d 300 -w 10 loadtest.py",
+      "env": {
+        "URL_SERVER": "https://shavar.stage.mozaws.net/downloads",
+        "CONNECTIONS": "100",
+        "TEST_DURATION": "300"
+      },
+      "docker_series": "shavar_loadtests"
+    },
+    {
+      "name": "STEP10",
+      "run_delay": 2970,
+      "instance_count": 10,
+      "instance_type": "m3.medium",
+      "run_max_time": 300,
+      "container_name": "firefoxtesteng/shavar-loadtests:latest",
+      "cmd": "molotov -c -p 1 -d 300 -w 10 loadtest.py",
+      "env": {
+        "URL_SERVER": "https://shavar.stage.mozaws.net/downloads",
+        "CONNECTIONS": "100",
+        "TEST_DURATION": "300"
+      },
+      "docker_series": "shavar_loadtests"
+    }
+  ]
+}
+
