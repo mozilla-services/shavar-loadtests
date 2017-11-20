@@ -1,17 +1,16 @@
 .DS_Store
+README.md
+
+# vim
 *.sw[op]
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 loadtest.env
 loads.json
 
-.tox/
-.coverage
-.coverage.*
-.cache
-venv/
-
-docs/_build/
+# PyBuilder
+target/
 
 # Other
 *.BAK
