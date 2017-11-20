@@ -1,6 +1,8 @@
 # Mozilla Load-Tester
 FROM stackbrew/debian:testing
 
+USER circleci
+
 RUN \
     apt-get update; \
     apt-get install -y python3-pip python3-venv git build-essential make; \
