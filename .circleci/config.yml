@@ -12,7 +12,7 @@ jobs:
     #working_directory: ~/repo
 
     steps:
-      #- checkout
+      - checkout
 
       # Download and cache dependencies
       #- restore_cache:
@@ -22,7 +22,7 @@ jobs:
       #    - v1-dependencies-
 
       #- run:
-      #    name: install dependencies
+      #    name: build and push docker images 
       #    command: |
       #      python3 -m venv venv
       #k      . venv/bin/activate
