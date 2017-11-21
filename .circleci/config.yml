@@ -22,7 +22,11 @@ jobs:
       #    - v1-dependencies-
 
       #- run:
+<<<<<<< HEAD
       #    name: build and push docker images 
+=======
+      #    name: install dependencies
+>>>>>>> e4bb7e59ac514f36cf29280013cbd5bf7caed1e3
       #    command: |
       #      python3 -m venv venv
       #k      . venv/bin/activate
